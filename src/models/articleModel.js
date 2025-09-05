@@ -8,10 +8,10 @@ const articleModel = sequelize.define('article', {
     excerpt: { type: DataTypes.STRING(500), allowNull: true },
     status: { type: DataTypes.ENUM('published', 'archived'), defaultValue: 'published' },
 },{
-    timestamps: true
+    timestamps: true,
 });
 
 export default articleModel;
 
-userModel.hasMany(articleModel, {as: 'article', foreignKey: 'user_id'});
+userModel.hasMany(articleModel, {as: 'article', foreignKey: 'user_id', onDelete: "CASCADE"});
 articleModel.belongsTo(userModel, { as: 'author', foreignKey: 'user_id' });
