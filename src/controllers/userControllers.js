@@ -18,12 +18,11 @@ export const getAllUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { username, email, password, role } = req.body;
         const user = await userModel.findByPk(id);
         if(!user){
             return res.status(404).json({ error: "El usuario no ha sido encontrado." });
         }
-        await userModel.update(req.body, { where: { id } });
+        await userModel.update( { where: { id } });
         res.status(200).json({ message: "El usuario ha sido actualizado correctamente." }, user);
     } catch (error) {
         console.log(chalk.bgRedBright("Ha ocurrido un error interno."));
