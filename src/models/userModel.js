@@ -1,6 +1,5 @@
 import sequelize from "../config/database.js";
 import { DataTypes } from "sequelize";
-import profileModel from "./profileModel.js";
 
 const userModel = sequelize.define("user",{
     username: { type: DataTypes.STRING(20), validate: { len: [3, 20] }, unique: true, allowNull: false },
@@ -14,5 +13,4 @@ const userModel = sequelize.define("user",{
 
 export default userModel;
 
-userModel.hasOne(profileModel, { as: 'profile', foreignKey: 'user_id' });
-profileModel.belongsTo(userModel, { as: 'user', foreignKey: 'user_id' });
+

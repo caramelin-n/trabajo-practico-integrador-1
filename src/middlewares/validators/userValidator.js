@@ -1,26 +1,27 @@
 import { body, param } from "express-validator";
 import userModel from "../../models/userModel.js";
+import { Op } from "sequelize";
 
 
 export const updateUserValidator = [
     body('username')
     .isAlphanumeric()
     .isLength({ min: 3, max:20 })
-    .notEmpty()
+    
     .withMessage("El username debe ser de tipo alfanumérico de 3-20 caracteres.")
-    .custom(async (value) => {
-        const isUserUnique = await userModel.findOne({ where: { username: value } });
+    .custom(async (value, { req }) => {
+        const isUserUnique = await userModel.findOne({ where: { username: value, id:{ [Op.ne] : req.params.id } }});
         if (isUserUnique) {
-            throw new Error({ error: "El username debe ser único." })
+            throw new Error("el username ya existe")
         };
     }),
     body('email')
-    .isEmail()
-    .withMessage("El email debe ser válido.")
-    .custom(async (value) => {
-        const isEmailUnique = await userModel.findOne({ where: { email: value } });
+   
+   
+    .custom(async (value, {req}) => {
+        const isEmailUnique = await userModel.findOne({ where: { email: value , id: {[Op.ne]: req.params.id}} });
         if (isEmailUnique){
-            throw new Error({ error: "El email debe ser único." });
+            throw new Error("el email ya existe");
         }
     }),
     body('password')
