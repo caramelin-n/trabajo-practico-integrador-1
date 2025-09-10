@@ -9,10 +9,11 @@ export const registerAuthValidator = [
     .withMessage("El username debe ser de tipo alfanumérico de 3-20 caracteres.")
     .custom(async (value) => {
         const isUserUnique = await userModel.findOne({ where: { username: value } });
-        if (isUserUnique) {
-            throw new Error({ error: "El username debe ser único." })
-        };
-    }),
+        if (isUserUnique){
+            throw new Error("El campo user no puede ser duplicado.")
+        }
+    })
+    .withMessage("El campo username ya esta siendo utilizado en la base de datos."),
 
     body('email')
     .isEmail()
@@ -20,9 +21,10 @@ export const registerAuthValidator = [
     .custom(async (value) => {
         const isEmailUnique = await userModel.findOne({ where: { email: value } });
         if (isEmailUnique){
-            throw new Error({ error: "El email debe ser único." });
+            throw new Error("El campo email no puede ser duplicado.")
         }
-    }),
+    })
+    .withMessage("El campo email ya está siendo utilizado en la base de datos."),
 
     body('password')
     .isLength({ min: 8 })
@@ -52,10 +54,13 @@ export const registerAuthValidator = [
     body("avatar_url")
     .isURL()
     .withMessage("el campo avatar_url debe de ser un URL valido"),
-
+    
     body("biography")
     .isLength({ max: 500 })
     .withMessage("el campo biography debe de tener un maximo de 500 caracteres")
+    ,
+    body("birth_date")
+    .isDate().withMessage("Estimado usuario, el campo birth_date debe de ser de un tipo de dato DATE, porfavor, cambie su peticion ")
 ]
 
 export const loginAuthValidator = [
@@ -71,5 +76,28 @@ export const loginAuthValidator = [
     .isLength({ min: 8 })
     .withMessage("La contraseña debe tener mínimo 8 caracteres")
 ];
+
+export const updateProfileValidator = [
+    body("first_name")
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+    .isLength({ min: 2, max: 50 })
+    .withMessage("El nombre debe tener 2-50 caracteres y estar compuesto sólo de letras."),
+    body("last_name")
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+    .isLength({ min: 2, max: 50 })
+    .withMessage("El nombre debe tener 2-50 caracteres y estar compuesto sólo de letras."),  
+    body("avatar_url")
+    .isURL()
+    .withMessage("el campo avatar_url debe de ser un URL valido"),
+    
+    body("biography")
+    .isLength({ max: 500 })
+    .withMessage("el campo biography debe de tener un maximo de 500 caracteres")
+    ,
+    // body("birth_date")
+    // .isDate().withMessage("Estimado usuario, el campo birth_date debe de ser de un tipo de dato DATE, porfavor, cambie su peticion ")
+];
+
+
 
 

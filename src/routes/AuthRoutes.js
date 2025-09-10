@@ -1,24 +1,20 @@
 
 import { Router } from "express";
-import { authRegister } from "../controllers/authControllers.js";
-import { registerAuthValidator } from "../middlewares/validators/authValidator.js";
+import { authRegister, authLogin , getProfile, authLogout , updateProfile} from "../controllers/authControllers.js";
+import { registerAuthValidator, loginAuthValidator, updateProfileValidator } from "../middlewares/validators/authValidator.js";
 import validator from "../middlewares/validator.js"
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 const authRouter = Router();
 
-/* ● POST /api/auth/register: Registro de usuario con creación automática de perfil.
-(público)
-● POST /api/auth/login: Login con JWT enviado como cookie segura. (público)
-● GET /api/auth/profile: Obtener perfil del usuario autenticado. (usuario autenticado)
-● PUT /api/auth/profile: Actualizar perfil del usuario autenticado. (usuario autenticado)
-● POST /api/auth/logout: Logout limpiando cookie de autenticación. (usuario
-autenticado) */
+//si se quiere verificar que un usuario está autenticado se llama a la funcion authMiddleware
+//si se quiere verificar si el usuario es admin para acceder a peticiones se llama a adminMiddleware
+
 
 authRouter.post('/auth/register', registerAuthValidator, validator , authRegister );
+authRouter.post("/auth/login",loginAuthValidator, validator, authLogin );
+authRouter.get("/auth/profile", authMiddleware , getProfile);
+authRouter.put("/auth/profile", authMiddleware, updateProfileValidator , validator , updateProfile);
+authRouter.post("/auth/logout", authMiddleware , authLogout);
 
-
-// authRouter.post('/auth/login');
-// authRouter.get('/auth/profile');
-// authRouter.put('/auth/profile');
-// authRouter.post('/auth/logout');
 
 export default authRouter;
