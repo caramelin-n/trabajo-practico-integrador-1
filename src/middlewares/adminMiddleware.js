@@ -1,6 +1,6 @@
 import { verifyToken } from "../helpers/jwt.helper.js";
 
-export const authAdminMiddleware = (req, res, next) => {
+const authAdminMiddleware = (req, res, next) => {
     try {
         const userisLogged = req.user;
         const token = req.cookies.token;
@@ -17,3 +17,5 @@ export const authAdminMiddleware = (req, res, next) => {
         return res.status(500).json("Error interno en el servidor.")
     }
 }
+
+export default authAdminMiddleware;

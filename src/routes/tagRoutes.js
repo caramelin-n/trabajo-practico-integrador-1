@@ -3,12 +3,12 @@ import { createTag, deleteTag, getAllTags, getTagById, updateTag } from "../cont
 import validator from "../middlewares/validator.js";
 import { findTagByIdValidator, createTagValidator, deleteTagValidator, updateTagValidator } from "../middlewares/validators/tagValidator.js";
 
-const router = Router();
+const tagRouter = Router();
 
-router.get('/', getAllTags);
-router.get('/:id', findTagByIdValidator, validator, getTagById);
-router.post('/', createTagValidator, validator, createTag);
-router.put('/:id', updateTagValidator, validator, updateTag);
-router.delete('/:id', deleteTagValidator, validator, deleteTag);
+tagRouter.get('/', getAllTags);
+tagRouter.get('/:id', findTagByIdValidator, validator, getTagById);
+tagRouter.post('/', createTagValidator, validator, createTag);
+tagRouter.put('/:id', updateTagValidator, validator, updateTag);
+tagRouter.delete('/:id', deleteTagValidator, validator, deleteTag);
 
-export default router;
+export default tagRouter;

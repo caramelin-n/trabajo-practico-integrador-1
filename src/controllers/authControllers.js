@@ -6,9 +6,16 @@ import chalk from "chalk";
 
 export const authRegister = async (req, res) => {
     try {
-        const { username, email, password, role, first_name, last_name, biography, avatar_url, birthday } = req.body;
+        const { username , email, password, role } = req.body;
+        const { first_name , last_name , biography, avatar_url, birthday} = req.body;
         const hashedPassword = await hashPassword(password);
-        const userExists = await userModel.findOne({ where: { username: username } });
+        // console.log(username)
+        const userExists = await userModel.findOne({
+            where:{
+                username
+            }
+        });
+        
         if (userExists){
             return res.status(400).json({ error: "El usuario ya está registrado." });
         };
@@ -16,11 +23,13 @@ export const authRegister = async (req, res) => {
         if(emailExists) {
             return res.status(400).json({ error: "Este correo ya está registrado" })
         }
+
         const user = await userModel.create({ username: username, email: email, password: hashedPassword, role: role });
-        await profileModel.create({ first_name: first_name, last_name: last_name, biography: biography, avatar_url: avatar_url, birthday: birthday, user_id: user_id });
+        // const {user_id} = user.id
+        await profileModel.create({ first_name: first_name, last_name: last_name, biography: biography, avatar_url: avatar_url, birthday: birthday, user_id: user.id });
         res.status(201).json({ message: "Usuario registrado con éxito." })
     } catch (error) {
-        console.log("Error interno en el servidor");
+        console.log("Error interno en el servidor1");
         console.log("---------------------------------");
         console.error(chalk.redBright(error));
     }
@@ -41,7 +50,7 @@ export const authLogin = async (req, res) => {
         res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 60 * 60 });
         return res.status(200).json({ message: "Sesión iniciada correctamente" })
     } catch (error) {
-        console.log("Error interno en el servidor");
+        console.log("Error interno en el servidor2");
         console.log("---------------------------------");
         console.error(chalk.redBright(error));
     }
@@ -57,7 +66,7 @@ export const getProfile = async (req, res) => {
         }
         return res.status(200).json({ user });
     } catch (error) {
-        console.log("Error interno en el servidor");
+        console.log("Error interno en el servidor3");
         console.log("---------------------------------");
         console.error(chalk.redBright(error));
     }
@@ -73,7 +82,7 @@ export const updateProfile = async (req, res) => {
         await userProfile.update(req.body);
         res.status(200).json(req.body);
     } catch (error) {
-        console.log("Error interno en el servidor");
+        console.log("Error interno en el servidor4");
         console.log("---------------------------------");
         console.error(chalk.redBright(error));
     }
@@ -83,7 +92,7 @@ export const authLogout = async (req, res) => {
         res.clearCookie("token");
         return res.json({ message: "Logout realizado correctamente." })
     } catch (error) {
-        console.log("Error interno en el servidor");
+        console.log("Error interno en el servidor5");
         console.log("---------------------------------");
         console.error(chalk.redBright(error));
     }
