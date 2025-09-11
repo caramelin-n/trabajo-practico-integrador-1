@@ -30,7 +30,8 @@ export const createArticleValidation = [
     .withMessage("El resumen debe ser de máximo 500 caracteres."),
 
     body('status')
-    .isIn(['published', 'archived']),
+    .isIn(['published', 'archived'])
+    .withMessage("El status debe ser o published o archived."),
 
     body('user_id')
     .exists()
@@ -58,7 +59,7 @@ export const createArticleValidation = [
 
 ];
 
-export const updateArticle = [
+export const updateArticleValidator = [
     body('title')
     .notEmpty()
     .withMessage("El título del artículo no debe ser vacío.")
@@ -79,7 +80,8 @@ export const updateArticle = [
     .withMessage("El resumen debe ser de máximo 500 caracteres."),
 
     body('status')
-    .isIn(['published', 'archived']),
+    .isIn(['published', 'archived'])
+    .withMessage("El status debe ser o published o archived."),
 
     body('user_id')
     .exists()

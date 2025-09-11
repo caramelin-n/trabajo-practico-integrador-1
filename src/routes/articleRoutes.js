@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createArticle, deleteArticle, getAllArticles, getArticleById, getUserArticles, getUserArticlesById, updateArticle } from "../controllers/articleControllers.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import validator from "../middlewares/validator.js";
-import ownerMiddleware from "../middlewares/ownerMiddleware.js"
+import authOwnerMiddleware from "../middlewares/ownerMiddleware.js"
 import adminMiddleware from "../middlewares/adminMiddleware.js"
 import { createArticleValidation, deleteArticleValidator, getArticleByIdValidator, getArticleUserByIdValidator, updateArticleValidator } from "../middlewares/validators/articleValidator.js";
 
@@ -23,5 +23,7 @@ articleRouter.get('/articles', authMiddleware, getAllArticles)
 articleRouter.get('/articles/:id', authMiddleware, getArticleByIdValidator, validator, getArticleById)
 articleRouter.get('articles/user', authMiddleware, getUserArticles)
 articleRouter.get('/articles/user/:id', authMiddleware, getArticleUserByIdValidator, validator, getUserArticlesById)
-articleRouter.put('/articles/:id', adminMiddleware, ownerMiddleware, updateArticleValidator, validator, updateArticle)
-articleRouter.delete('/articles/:id', adminMiddleware, ownerMiddleware, deleteArticleValidator, validator, deleteArticle)
+articleRouter.put('/articles/:id', adminMiddleware, authOwnerMiddleware , updateArticleValidator, validator, updateArticle)
+articleRouter.delete('/articles/:id', adminMiddleware, authOwnerMiddleware , deleteArticleValidator, validator, deleteArticle)
+
+export default articleRouter;

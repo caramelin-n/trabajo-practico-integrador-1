@@ -1,6 +1,6 @@
 import articleModel from "../models/articleModel.js";
 
-export const authOwnerMiddleware = async (req, res, next) => {
+const authOwnerMiddleware = async (req, res, next) => {
     try {
         const user = req.userLogged;
         const article = await articleModel.findByPk(req.params.id);
@@ -12,3 +12,5 @@ export const authOwnerMiddleware = async (req, res, next) => {
         return res.status(500).json("Error interno en el servidor.");
     }
 };
+
+export default authOwnerMiddleware;

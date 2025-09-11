@@ -1,8 +1,8 @@
 import express from "express";
 import db from "./src/config/db.js";
 import authRouter from "./src/routes/AuthRoutes.js";
-import userRouter from "./src/routes/userRoutes.js";
 import cookieParser from "cookie-parser";
+import userRouter from "./src/routes/userRoutes.js";
 //modelos
 import "./src/models/articleModel.js"
 import "./src/models/articleTagModel.js"
@@ -11,6 +11,7 @@ import "./src/models/tagModel.js"
 import "./src/models/userModel.js"
 //relaciones
 import "./src/models/index.js"
+import articleRouter from "./src/routes/articleRoutes.js";
 
 
 const port = 3000;
@@ -23,10 +24,11 @@ app.use(cookieParser());
 
 app.use("/api", userRouter);
 app.use("/api", authRouter);
+app.use("/api", articleRouter)
 
-/* app.use('api/profiles', profileRoutes);
-app.use('api/articles', articleRoutes);
-app.use('api/articletags', articleTagRoutes); */
+// app.use('/api', profileRoutes);
+// app.use('/api', articleRoutes);
+// app.use('/api', articleTagRoutes);
 
 
 app.listen(port, async () => {

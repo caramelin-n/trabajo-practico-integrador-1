@@ -45,7 +45,6 @@ export const authLogin = async (req, res) => {
             }
         });
         if(!user){
-            console.log("pene")
             return res.status(401).json({ error: "Credenciales inválidas." });
         };
         const passMatch =  comparePassword(password, user.password );

@@ -71,8 +71,6 @@ export const deleteUser = async (req, res) => {
 
         await user.destroy();
 
-
-
         res.status(200).json({ message: "Usuario eliminado con éxito." });
     } catch (error) {
         console.log(chalk.bgRedBright("Ha ocurrido un error interno."));
