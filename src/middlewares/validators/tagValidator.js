@@ -8,6 +8,8 @@ export const createTagValidator = [
     .isString()
     .isLength({ min: 2, max: 30 })
     .withMessage("El nombre de la etiqueta debe tener mínimo 2 caracteres y máximo 30.")
+    .matches(/^\S+$/)
+    .withMessage("El nombre de la etiqueta no debe contener espacios.")
     .custom (async (value) => {
         const isNameUnique = await tagModel.findOne({ where: { name: value } });
         if (isNameUnique){
@@ -22,6 +24,8 @@ export const updateTagValidator = [
     .isString()
     .isLength({ min: 2, max: 30 })
     .withMessage("El nombre de la etiqueta debe tener mínimo 2 caracteres y máximo 30.")
+    .matches(/^\S+$/)
+    .withMessage("El nombre de la etiqueta no debe contener espacios.")
     .custom (async (value) => {
         const isNameUnique = await tagModel.findOne({ where: { name: value } });
         if (isNameUnique){

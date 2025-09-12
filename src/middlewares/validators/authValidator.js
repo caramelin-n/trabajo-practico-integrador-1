@@ -60,7 +60,8 @@ export const registerAuthValidator = [
     .withMessage("el campo biography debe de tener un maximo de 500 caracteres")
     ,
     body("birth_date")
-    .isDate().withMessage("Estimado usuario, el campo birth_date debe de ser de un tipo de dato DATE, porfavor, cambie su peticion ")
+    .isDate()
+    .withMessage("Estimado usuario, el campo birth_date debe de ser de un tipo de dato DATE, porfavor, cambie su peticion ")
 ]
 
 export const loginAuthValidator = [
@@ -94,8 +95,9 @@ export const updateProfileValidator = [
     .isLength({ max: 500 })
     .withMessage("el campo biography debe de tener un maximo de 500 caracteres")
     ,
-    // body("birth_date")
-    // .isDate().withMessage("Estimado usuario, el campo birth_date debe de ser de un tipo de dato DATE, porfavor, cambie su peticion ")
+    body("birth_date")
+    .isDate()
+    .withMessage("Estimado usuario, el campo birth_date debe de ser de un tipo de dato DATE, porfavor, cambie su peticion ")
 ];
 
 

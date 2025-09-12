@@ -1,6 +1,5 @@
 import articleModel from "../../models/articleModel.js";
 import { body, param } from "express-validator";
-import userModel from "../../models/userModel.js";
 import { verifyToken } from "../../helpers/jwt.helper.js";
 
 /* ● title: 3-200 caracteres, obligatorio.
@@ -33,30 +32,6 @@ export const createArticleValidation = [
     .isIn(['published', 'archived'])
     .withMessage("El status debe ser o published o archived."),
 
-    body('user_id')
-    .exists()
-    .withMessage("El campo user_id es obligatorio.")
-    .isInt({ min: 1 })
-    .withMessage('El user_id debe ser un número entero positivo')
-    .custom(async (value) => {
-        const user = await userModel.findByPk(value);
-        if(!user){
-            throw new Error("El usuario no existe en la base de datos.")
-        }
-        return true;
-    })
-    .custom(async (value, {req})=>{
-        const token = verifyToken(req.cookies.token)
-        
-        const article = await articleModel.findOne({ where: { user_id: value} });
-        if (!article){
-            throw new Error("el article no existe")
-        }
-        if(!(article.user_id == token.id)){throw new Error("El usuario no es dueño del articulo");
-        }
-        return true;
-    })
-
 ];
 
 export const updateArticleValidator = [
@@ -82,30 +57,6 @@ export const updateArticleValidator = [
     body('status')
     .isIn(['published', 'archived'])
     .withMessage("El status debe ser o published o archived."),
-
-    body('user_id')
-    .exists()
-    .withMessage("El campo user_id es obligatorio.")
-    .isInt({ min: 1 })
-    .withMessage('El user_id debe ser un número entero positivo')
-    .custom(async (value) => {
-        const user = await userModel.findByPk(value);
-        if(!user){
-            throw new Error("El usuario no existe en la base de datos.")
-        }
-        return true;
-    })
-    .custom(async (value, {req})=>{
-        const token = verifyToken(req.cookies.token)
-        
-        const article = await articleModel.findOne({ where: { user_id: value} });
-        if (!article){
-            throw new Error("el article no existe")
-        }
-        if(!(article.user_id == token.id)){throw new Error("El usuario no es dueño del articulo");
-        }
-        return true;
-    }),
 
     param('id')
     .exists()

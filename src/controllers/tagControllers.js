@@ -1,6 +1,5 @@
 import chalk from "chalk";
 import tagModel from "../models/tagModel.js";
-import { where } from "sequelize";
 import articleModel from "../models/articleModel.js";
 
 /* ● POST /api/tags → Crear etiqueta (solo admin).
@@ -21,7 +20,7 @@ export const createTag = async (req, res) => {
         const tag = await tagModel.create({ name });
         return res.status(201).json(tag);
     } catch (error) {
-        console.log(chalk.bgRedBright("Error interno en el servidor."));
+        console.log(chalk.bgRedBright("Error interno en el servidor1."));
         console.log("-------------------------------------------------");
         console.error(chalk.redBright(error));
         res.status(500).json({ error: "Error del servidor." });
@@ -41,7 +40,7 @@ export const updateTag = async (req, res) => {
         await tag.update(req.body);
         res.status(200).json({ message: "La etiqueta ha sido actualizada correctamente." });
     } catch (error) {
-        console.log(chalk.bgRedBright("Error interno en el servidor."));
+        console.log(chalk.bgRedBright("Error interno en el servidor2."));
         console.log("-------------------------------------------------");
         console.error(chalk.redBright(error));
         res.status(500).json({ error: "Error del servidor." });
@@ -53,7 +52,7 @@ export const getAllTags = async (req, res) => {
         const tags = await tagModel.findAll();
         return res.status(200).json(tags);
     } catch (error) {
-        console.log(chalk.bgRedBright("Error interno en el servidor."));
+        console.log(chalk.bgRedBright("Error interno en el servidor3."));
         console.log("-------------------------------------------------");
         console.error(chalk.redBright(error));
         res.status(500).json({ error: "Error del servidor." });
@@ -76,7 +75,7 @@ export const getTagById = async (req, res) => {
      }
      return res.status(200).json(tag);
     } catch (error) {
-        console.log(chalk.bgRedBright("Error interno en el servidor."));
+        console.log(chalk.bgRedBright("Error interno en el servidor4."));
         console.log("-------------------------------------------------");
         console.error(chalk.redBright(error));
         res.status(500).json({ error: "Error del servidor." });
@@ -96,7 +95,7 @@ export const deleteTag = async (req, res) => {
         await tag.destroy();
         return res.status(200).json({ message: "Etiqueta eliminada correctamente." })
     } catch (error) {
-        console.log(chalk.bgRedBright("Error interno en el servidor."));
+        console.log(chalk.bgRedBright("Error interno en el servidor5."));
         console.log("-------------------------------------------------");
         console.error(chalk.redBright(error));
         res.status(500).json({ error: "Error del servidor." });

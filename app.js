@@ -12,6 +12,8 @@ import "./src/models/userModel.js"
 //relaciones
 import "./src/models/index.js"
 import articleRouter from "./src/routes/articleRoutes.js";
+import tagRouter from "./src/routes/tagRoutes.js";
+import articleTagRoutes from "./src/routes/articleTagRoutes.js";
 
 
 const port = 3000;
@@ -25,11 +27,8 @@ app.use(cookieParser());
 app.use("/api", userRouter);
 app.use("/api", authRouter);
 app.use("/api", articleRouter)
-
-// app.use('/api', profileRoutes);
-// app.use('/api', articleRoutes);
-// app.use('/api', articleTagRoutes);
-
+app.use("/api", tagRouter)
+app.use('/api', articleTagRoutes);
 
 app.listen(port, async () => {
     await db();

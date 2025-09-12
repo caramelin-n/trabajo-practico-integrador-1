@@ -50,6 +50,7 @@ export const authLogin = async (req, res) => {
         const passMatch =  comparePassword(password, user.password );
         if(!passMatch){return res.status(401).json({error: "credenciales invalidas"})}
         const token = generateToken(user);
+        console.log(token)
         res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 60 * 60 });
         return res.status(200).json({ message: "Sesión iniciada correctamente" });
     } catch (error) {
