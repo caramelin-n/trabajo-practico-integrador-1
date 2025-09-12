@@ -10,6 +10,7 @@ import "./src/models/profileModel.js"
 import "./src/models/tagModel.js"
 import "./src/models/userModel.js"
 //relacionesss
+//ayuda no me deja hacer el push
 import "./src/models/index.js"
 import articleRouter from "./src/routes/articleRoutes.js";
 import tagRouter from "./src/routes/tagRoutes.js";
