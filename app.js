@@ -9,7 +9,7 @@ import "./src/models/articleTagModel.js"
 import "./src/models/profileModel.js"
 import "./src/models/tagModel.js"
 import "./src/models/userModel.js"
-//relaciones
+//relacioness
 import "./src/models/index.js"
 import articleRouter from "./src/routes/articleRoutes.js";
 import tagRouter from "./src/routes/tagRoutes.js";
